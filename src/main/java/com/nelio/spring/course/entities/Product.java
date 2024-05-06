@@ -14,8 +14,6 @@ import java.util.Set;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class Product implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -35,7 +33,7 @@ public class Product implements Serializable {
     private Set<Category> categories = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "id.product")
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.PERSIST)
     public Set<OrderItem> items = new HashSet<>();
 
     public Product(Long id, String name, String description, Double price, String imgUrl) {

@@ -7,14 +7,16 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "tb_order_item")
-@EqualsAndHashCode
 @NoArgsConstructor
-@ToString
+@EqualsAndHashCode
 public class OrderItem implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @EmbeddedId
     private OrderItemPK id = new OrderItemPK();
@@ -26,6 +28,8 @@ public class OrderItem implements Serializable {
         id.setProduct(product);
         this.quantity = quantity;
         this.price = product.getPrice();
+        id.getOrder().items.add(this);
+        id.getProduct().items.add(this);
     }
 
     @JsonIgnore

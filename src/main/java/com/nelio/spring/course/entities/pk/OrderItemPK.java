@@ -7,15 +7,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
+@Embeddable
 @Getter @Setter
 @EqualsAndHashCode
-@Embeddable
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class OrderItemPK implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

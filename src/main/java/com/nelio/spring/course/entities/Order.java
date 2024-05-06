@@ -9,6 +9,7 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,8 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode
-@ToString
 public class Order implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -40,7 +39,7 @@ public class Order implements Serializable {
     private User client;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "id.order")
+    @OneToMany(mappedBy = "id.order", cascade = CascadeType.PERSIST)
     public Set<OrderItem> items = new HashSet<>();
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
@@ -64,6 +63,7 @@ public class Order implements Serializable {
     }
 
     public Double getTotal() {
+
         return items.stream()
                 .mapToDouble(OrderItem::getSubTotal)
                 .sum();
